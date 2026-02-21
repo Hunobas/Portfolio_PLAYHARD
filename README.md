@@ -29,7 +29,9 @@
 
 ### 1. Unity C# 아키텍처 설계 — FSM 기반 플레이 모드
 
-**목성의 노래 프로젝트**에서 5가지 플레이 모드(일반/패널/시네마/다이얼로그/일시정지)가 중첩되어 조작 불가 버그가 반복 발생했습니다.
+![GameState 버그 영상](https://github.com/user-attachments/assets/fa973d2f-df58-483d-ae3b-05d5104e9bc6)
+
+**1인창 퍼즐 게임**인 목성의 노래 프로젝트에서 5가지 플레이 모드(일반/패널/시네마/다이얼로그/일시정지)가 중첩되어 조작 불가 버그가 반복 발생했습니다.
 
 상태가 여러 파일에 분산되어 디버깅에 매번 평균 1시간이 소요되었고, 중앙 집중식 FSM으로 재설계했습니다.
 ```csharp
@@ -62,6 +64,8 @@ public void ChangePlayMode(IPlayMode next)
 
 Unity 기본 AudioSource로는 페이드/크로스페이드/Duck 처리가 번거롭고, 기획자가 Inspector에서 제어할 수 없었습니다.
 
+![preview](https://github.com/user-attachments/assets/43a81247-8927-4e6c-a465-2a5db6d5be0f)
+
 영상 편집 프로그램의 트랙/클립 개념을 적용하여 `SoundSource`(트랙) + `SoundEntry`(클립) 구조로 재설계했습니다.
 ```csharp
 // 프로그래머: 한 줄 체이닝으로 복잡한 사운드 연출 완성
@@ -87,9 +91,13 @@ _soundSource.PlayByNameOrNull("GeneratorStartUp")
 
 #### 3-1. Unity 렌더링 배칭 최적화
 
+<img width="1370" height="814" alt="image" src="https://github.com/user-attachments/assets/b1cb833c-c6ae-4603-bdc4-5901bd7b340f" />
+
 400만 버텍스 + 300개 머터리얼 씬에서 30~60 FPS로 불안정하던 문제를 해결했습니다.
 
 MeshBaker로 방 단위 텍스처 아틀라스 + 콤바인 메쉬, 오클루전 컬링을 적용했습니다.
+
+<img width="1548" height="591" alt="image" src="https://github.com/user-attachments/assets/6b35a453-6a45-4258-9635-3bcff6062e97" />
 
 | 지표 | Before | After |
 |------|--------|-------|
@@ -102,6 +110,10 @@ MeshBaker로 방 단위 텍스처 아틀라스 + 콤바인 메쉬, 오클루전 
 <summary><b>3-2. ASCII 렌더러 최적화 (CPU 27.6ms → 2.15ms)</b></summary>
 
 <br />
+
+![image (2)](https://github.com/user-attachments/assets/389ec02c-9fdf-4cdd-aa57-0c9e79bbfa4b)
+
+*Unity 에디터에서 실시간 미리보기 가능한 아스키 렌더러*
 
 160×90 그리드 × 4×4 슈퍼샘플 = 230,400회 픽셀 접근으로 CPU 점유 70.4%를 차지하던 문제를 해결했습니다.
 
