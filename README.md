@@ -76,8 +76,8 @@ _soundSource.PlayByNameOrNull("GeneratorStartUp")
     .WithOptions(PlayOptions.DuckOthers)
     .OnFinish(() => _soundSource.PlayByNameOrNull("GeneratorLoop")
         .WithLoop()
-        .WithOptions(PlayOptions.DuckOthers))
-        .WithOverlapPolicy(OverlapPolicy.Crossfade)
+        .WithOptions(PlayOptions.DuckOthers)
+        .WithOverlapPolicy(OverlapPolicy.Crossfade));
 ```
 
 | 구분 | SoundSource | SoundEntry |
