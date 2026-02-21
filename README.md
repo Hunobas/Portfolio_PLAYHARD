@@ -60,7 +60,7 @@ public void ChangePlayMode(IPlayMode next)
 
 ---
 
-### 2. 기획자 친화적 사운드 시스템 설계 (SDK 수준 모듈)
+### 2. 기획자 친화적 사운드 시스템 설계
 
 Unity 기본 AudioSource로는 페이드/크로스페이드/Duck 처리가 번거롭고, 기획자가 Inspector에서 제어할 수 없었습니다.
 
