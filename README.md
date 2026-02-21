@@ -76,12 +76,15 @@ _soundSource.PlayByNameOrNull("GeneratorStartUp")
     .WithOptions(PlayOptions.DuckOthers)
     .OnFinish(() => _soundSource.PlayByNameOrNull("GeneratorLoop")
         .WithLoop()
-        .WithOptions(PlayOptions.DuckOthers));
+        .WithOptions(PlayOptions.DuckOthers))
+        .WithOverlapPolicy(OverlapPolicy.Crossfade)
 ```
 
-- 기획자: Inspector에서 기본값(FadeIn 시간, OverlapPolicy 등) 직접 설정
-- 프로그래머: Fluent API로 런타임 오버라이드
-- Duck 시스템으로 중요 사운드 재생 시 배경음 자동 감쇠
+| 구분 | SoundSource | SoundEntry |
+|------|-------------|------------|
+| **영상편집 대응 개념** | 오디오 트랙 | 개별 클립 |
+| **대상 사용자** | 기획자 (Inspector 설정) | 프로그래머 (코드 제어) |
+| **설계 방향** | SerializedField로 툴 친화적 | FluentAPI로 체이닝 |
 
 📂 [SoundSource 코드](https://github.com/Hunobas/Song-Of-Jupitor/blob/main/Scripts/Sound/SoundSource.cs) | [SoundEntry 코드](https://github.com/Hunobas/Song-Of-Jupitor/blob/main/Scripts/Sound/SoundEntry.cs) | [SoundManager 코드](https://github.com/Hunobas/Song-Of-Jupitor/blob/main/Scripts/Sound/SoundManager.cs)
 
